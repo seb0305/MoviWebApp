@@ -5,6 +5,9 @@
     {% for user in users %}
     <li class="user-entry">
         <a href="{{ url_for('get_movies', user_id=user.id) }}" class="btn">{{ user.name }}</a>
+        <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post">
+            <button type="submit">Delete User</button>
+        </form>
     </li>
     {% endfor %}
 </ul>
