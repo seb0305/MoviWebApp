@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Movies for User {{ user_id }}</h1>
+<h1>Movies for {{ user_name }}</h1>
 <ul class="movie-list">
     {% for movie in movies %}
     <li class="movie-entry">
-        <img src="{{ movie.poster_url }}" alt="{{ movie.name }}" style="width: 100px; height: auto;">
-        {{ movie.name }} ({{ movie.year }}) - {{ movie.director }}
-        <form action="{{ url_for('delete_movie', user_id=user_id, movie_id=movie.id) }}" method="post">
-            <button type="submit">Delete Movie</button>
-        </form>
+        <div class="movie-container">
+            <img src="{{ movie.poster_url }}" alt="{{ movie.name }}" style="width: 100px; height: auto;">
+            <div class="movie-info">
+                <p>{{ movie.name }} ({{ movie.year }}) - {{ movie.director }}</p>
+            </div>
+            <form action="{{ url_for('delete_movie', user_id=user_id, movie_id=movie.id) }}" method="post" class="delete-form">
+                <button type="submit" class="delete-btn"><i class="fas fa-trash"></i></button>
+            </form>
+        </div>
     </li>
     {% endfor %}
 </ul>

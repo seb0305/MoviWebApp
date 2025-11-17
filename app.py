@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from data_manager import DataManager
-from models import db, Movie
+from models import db, Movie, User
 import os
 import requests
 
@@ -48,8 +48,9 @@ def delete_user(user_id):
 
 @app.route('/users/<int:user_id>/movies', methods=['GET'])
 def get_movies(user_id):
+    user = User.query.get(user_id)
     movies = data_manager.get_movies(user_id)
-    return render_template('movies.html', movies=movies, user_id=user_id)
+    return render_template('movies.html', movies=movies, user_id=user_id, user_name=user.name)
 
 @app.route('/users/<int:user_id>/movies', methods=['POST'])
 def add_movie(user_id):
