@@ -1,0 +1,36 @@
+# Environment variables
+.env
+
+# Configuration files with API keys
+config.py
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+
+# Database files
+data/*.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Flask session files
+sessions/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+Thumbs.db

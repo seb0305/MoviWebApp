@@ -3,8 +3,11 @@ from data_manager import DataManager
 from models import db, Movie, User
 import os
 import requests
+from dotenv import load_dotenv
+from config import OMDB_API_KEY
 
-OMDB_API_KEY = '865834c6'  # Replace with your actual API key
+load_dotenv()
+OMDB_API_KEY = os.getenv('OMDB_API_KEY')
 
 app = Flask(__name__)
 
