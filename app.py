@@ -23,6 +23,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 data_manager = DataManager()
 
+# Error Handler
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -31,7 +32,11 @@ def page_not_found(e):
 def internal_error(e):
     return render_template('500.html'), 500
 
-
+@app.errorhandler(Exception)
+def handle_exception(e):
+    # Logge den Fehler für Debugging
+    app.logger.error(f"Ein Fehler ist aufgetreten: {e}")
+    return render_template('error.html', error=str(e)), 500
 @app.route('/')
 def index():
     users = data_manager.get_users()
