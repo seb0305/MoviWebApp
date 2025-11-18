@@ -13,11 +13,18 @@ The app includes clear error handling and a user-friendly interface for easy mov
 - Responsive design with user-friendly UI.
 
 ## Installation
-1. Clone the repository:
+1. Clone the repository: 
+git clone https://github.com/seb0305/MoviWebApp.git
+cd MoviWebApp
 2. Create a virtual environment and activate it:
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 3. Install the required packages:
+pip install -r requirements.txt
 4. Set up your OMDb API key in config.py:
+OMDB_API_KEY = 'your_api_key_here'
 5. Run the application:
+python app.py
 
 ## Usage
 - Visit `http://localhost:5000` to use the app.
