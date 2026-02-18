@@ -1,45 +1,114 @@
 # MoviWebApp
+**Flask Movie Collection Manager with OMDb API Integration, Posters & Full CRUD Operations**
 
-A simple, production-ready Flask web application for managing movie collections. 
-Features include user and movie creation, deletion, updating, and searching, with automatic fetching of movie details (including posters) from the OMDb API. 
-The app includes clear error handling and a user-friendly interface for easy movie management.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-Web%20Framework-blue)](https://flask.palletsprojects.com/)
+[![SQLite](https://img.shields.io/badge/SQLite-Database-green)](https://www.sqlite.org/)
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-orange)](https://www.sqlalchemy.org/)
+[![OMDb](https://img.shields.io/badge/OMDb-API-red)](https://www.omdbapi.com/)
 
-## Features
-- Add, view, update, and delete users.
-- Add, view, update, and delete movies.
-- Automatically fetch movie details (title, director, year, poster) from OMDb API.
-- Delete users and movies with a trash bin icon.
-- Error handling for common HTTP errors and exceptions.
-- Responsive design with user-friendly UI.
+## 🎯 Features
 
-## Installation
-1. Clone the repository: 
-git clone https://github.com/seb0305/MoviWebApp.git
+| Feature | Description |
+|---------|-------------|
+| **User Management** | Add/delete users (auto-cascades movies) |
+| **Movie Collections** | Per-user movies with title, director, year, posters |
+| **OMDb Auto-Fetch** | Enter title → Instant details/poster from OMDb API |
+| **Full CRUD** | Create/update/delete movies per user |
+| **Trash Bin UI** | Intuitive delete buttons with confirmation |
+| **Error Handling** | 404/500 pages + exception logging |
+| **Responsive Design** | Clean web interface for desktop/mobile |
+
+## 🏗️ Tech Stack
+
+**Backend:** Flask + Flask-SQLAlchemy + SQLite (`data/movies.db`)  
+**Data:** DataManager class + User/Movie models  
+**API:** OMDb (title → title/director/year/poster)  
+**Config:** `.env` + `config.py` for API keys  
+**Deployment:** Render/Heroku/PythonAnywhere ready
+
+## 🚀 Quick Start
+
+```bash
+# Clone & setup
+git clone <your-repo-url>
 cd MoviWebApp
-2. Create a virtual environment and activate it:
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-3. Install the required packages:
-pip install -r requirements.txt
-4. Set up your OMDb API key in config.py:
-OMDB_API_KEY = 'your_api_key_here'
-5. Run the application:
+
+# Virtualenv & deps
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install flask flask-sqlalchemy python-dotenv requests
+
+# Config OMDb key
+echo "OMDB_API_KEY=your_key_here" > .env
+
+# Run
+python app.py
+# Visit http://localhost:5000
+```
+
+## 🎮 How to Use
+1. Add Users
+
+    Home → Enter name → Submit
+
+2. Build Collections
+
+    Click user → Add Movie → "The Matrix" → Auto-fetch details/poster!
+
+3. Manage Movies
+
+    Update titles → Delete with 🗑️ → Delete user (removes all movies)
+
+Example: Add "Alice" → Add "Inception" → View Christopher Nolan poster → Delete!
+
+## 🧠 Core Mechanics
+- API Call: http://www.omdbapi.com/?t=Inception&apikey=KEY → Parse JSON
+
+- Models: User(1-n)Movie (name, director, year, poster_url)
+
+- Cascade Delete: User delete → All movies auto-purged
+
+- DataManager: Centralized CRUD (get/create/update/delete)
+
+## 📊 Database Schema
+```text
+erDiagram
+    User {
+        int id PK
+        string name
+    }
+    Movie {
+        int id PK
+        string name
+        string director
+        int year
+        string poster_url
+        int user_id FK
+    }
+    User ||--o{ Movie : "owns"
+```
+
+## 📝 Development
+```bash
+# Debug mode
+export FLASK_ENV=development
 python app.py
 
-## Usage
-- Visit `http://localhost:5000` to use the app.
-- Add users and movies through the web interface.
-- Delete users and movies using the trash bin icons.
+# Shell access
+flask shell
+>>> from data_manager import DataManager; dm = DataManager()
 
-## Configuration
-- Store sensitive data like API keys in `config.py`.
-- Add `.env` and `config.py` to `.gitignore` to keep your API keys secure.
+# Test OMDb
+curl "http://www.omdbapi.com/?t=Matrix&apikey=sk..."
+```
+## 🙌 Contributing
+- Fork → Add features (ratings, search)
 
-## Documentation
-- `app.py`: Main Flask application with routes and error handlers.
-- `models.py`: Database models for users and movies.
-- `data_manager.py`: Class for managing users and movies.
-- `config.py`: Configuration settings and constants.
+- Test full CRUD + OMDb flow
 
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request.
+- PR with failing tests fixed!
+
+
+## 📄 License
+MIT - Free for movie fans!
