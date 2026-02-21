@@ -88,6 +88,22 @@ erDiagram
     }
     User ||--o{ Movie : "owns"
 ```
+```mermaid
+erDiagram
+    User {
+        int id PK
+        string name
+    }
+    Movie {
+        int id PK
+        string name
+        string director
+        int year
+        string poster_url
+        int user_id FK
+    }
+    User ||--o{ Movie : "owns"
+```
 
 ## 📝 Development
 ```bash
